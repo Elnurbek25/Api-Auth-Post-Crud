@@ -7,7 +7,6 @@ use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
-
 class CommentMiddleware
 {
     /**
@@ -18,11 +17,9 @@ class CommentMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $comment = Comment::findOrFail($request->route('comment'));
-
         if (Auth::user()->id !== $comment->user_id) {
             return response()->json(['message' => 'Siz bu izohni o\'chira olmaysiz.'], 403); // Forbidden if not the owner
         }
-
         return $next($request);
     }
 }
