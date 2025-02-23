@@ -18,14 +18,11 @@ class AuthController extends Controller
             'password'=>bcrypt( $request->password),
             ]);
             $token =$user->createToken('auth_token')->plainTextToken;
-
             return response()->json([
                 'token'=>$token,
                 'user'=>$user
             ]);
     }
-  
-
     public function login(LoginRequest $request)
     {
         $user=User::where('email',$request->email)->first();
@@ -43,7 +40,6 @@ class AuthController extends Controller
         'user'=>$user
     ]);
     }
-
     public function logout(Request $request){
         $user=$request->user();
         $user->tokens->delete();
